@@ -1,0 +1,22 @@
+package repository;
+
+import domain.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.QueryHints;
+
+import javax.persistence.QueryHint;
+
+
+public interface StudentRepository extends JpaRepository<Student, Integer> {
+
+	@QueryHints(value = {@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_CACHEABLE, value = "true")})
+	@Query("select s from Student s")
+	Page<Student> toGetAllStudents(Pageable pageable);
+
+
+
+
+}

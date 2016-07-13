@@ -1,0 +1,145 @@
+#side {
+
+	float: left;
+	width: 170px;
+	height: 100%;
+	background: #bbf2bf;
+	font-size: 18px;
+	color: #000;
+	margin-top: 3px;
+}
+
+#header {
+
+	width: 100%;
+	height: 40px;
+	font-size: 25px;
+	background: #bbf2bf;
+}
+
+#content {
+
+	float: left;
+	margin-left: 20px;
+	margin-top: 3px;
+	/*border:1px solid black;*/
+	width: 80%;
+	height: 100%;
+}
+
+.header-login-btn {
+
+	float: right;
+	margin-top: 3px;
+	margin-right: 20px;
+}
+
+/*animation templations*/
+
+.aaa.ng-enter {
+	transform: translateX(60px);
+	-ms-transform: translateX(60px);
+	-webkit-transform: translateX(60px);
+	transition-duration: 250ms;
+	-webkit-transition-duration: 250ms;
+	opacity: 0;
+}
+
+/* line 171, ../sass/ng-animation.scss */
+.aaa.ng-enter {
+	transform: translateX(-60px);
+	-ms-transform: translateX(-60px);
+	-webkit-transform: translateX(-60px);
+	transition-duration: 250ms;
+	-webkit-transition-duration: 250ms;
+	opacity: 0;
+}
+
+/* line 225, ../sass/ng-animation.scss */
+.stage.ng-enter-active {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	opacity: 1;
+}
+
+/* line 230, ../sass/ng-animation.scss */
+.stage.ng-leave {
+	transform: translateX(0);
+	-ms-transform: translateX(0);
+	-webkit-transform: translateX(0);
+	transition-duration: 250ms;
+	-webkit-transition-duration: 250ms;
+	opacity: 1;
+}
+
+.stage.ng-leave-active {
+	transform: translateX(-60px);
+	-ms-transform: translateX(-60px);
+	-webkit-transform: translateX(-60px);
+	opacity: 0;
+}
+
+
+/*图片瀑布流的样式设置*/
+/*图片排列一行*/
+.deckgrid .column {
+	float: left;
+}
+
+/*样式，没有这个会出错，其中4 是列数*/
+.deckgrid[deckgrid]::before {
+	content: '4 .column.size-1-5';
+	visibility: hidden;
+}
+
+/*图片之间的间距*/
+.ng-scope {
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.animation-fade {
+	opacity: 0;
+}
+
+.animation-faded {
+	opacity: 1;
+}
+
+.animation-faded {
+	-webkit-transition: opacity 1s linear .2s;
+	-moz-transition: opacity 1s linear .2s;
+	-o-transition: opacity 1s linear .2s;
+	transition: opacity 1s linear .2s;
+}
+
+.photo {
+	background: #fff url("/images/spinner.gif") center 30px no-repeat;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-radius: 3px;
+	margin: 0 10px 10px 0;
+	position: relative;
+}
+
+.photo .photo-index {
+	background: rgba(0, 0, 0, .9);
+	color: #fff;
+	position: absolute;
+	height: 100%;
+	text-align: center;
+	width: 100%;
+	z-index: 99;
+}
+
+.photo .photo-index p:first-child {
+	margin-top: 10px;
+}
+
+.photo .photo-wrapper {
+	min-height: 60px;
+}
+
+.photo .photo-description {
+	padding: 15px;
+}
