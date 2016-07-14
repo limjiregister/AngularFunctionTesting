@@ -1,6 +1,6 @@
 /** Created on 2016/7/3 */
 var app = angular.module("myapp",
-	["ui.router", 'akoenig.deckgrid', 'ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar']).config(
+	["ui.router", 'akoenig.deckgrid', 'ui.bootstrap','ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar']).config(
 	['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = false;
 	}]);
@@ -10,20 +10,24 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 	$urlRouterProvider.otherwise("default")
 
-	$stateProvider.state("one",{
-		url:"/one",
-		templateUrl:"one.req",
-		controller:"StudentsCtl"
+	$stateProvider.state("one", {
+		url: "/one",
+		templateUrl: "one.req",
+		controller: "StudentsCtl"
 
-	}).state("two",{
-		url:"/two",
-		templateUrl:"two.req",
-		controller:"twoCtrl"
+	}).state("two", {
+		url: "/two",
+		templateUrl: "two.req",
+		controller: "twoCtrl"
 
-	}).state("default",{
-		url:"/default",
+	}).state("poiTest", {
+		url:"/poiTest",
+		templateUrl:"poiTest.req",
+		controller:"poiCtrl"
+	}).state("default", {
+		url: "/default",
 		templateUrl: "home.req",
-		controller:"mainCtrl"
+		controller: "mainCtrl"
 
 	})
 });
@@ -77,7 +81,7 @@ app.config(function ($httpProvider) {
  *   angularjs的factory方法
  *
  **/
-app.factory("baseMethod", ["$http",'cfpLoadingBar' ,function ($http, cfpLoadingBar) {
+app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoadingBar) {
 
 	return {
 		toGetStudentList: function (pageNo) {

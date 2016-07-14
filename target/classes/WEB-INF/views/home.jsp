@@ -18,6 +18,7 @@
 	<ul>
 		<li><a ui-sref="one">loadingBar</a></li>
 		<li><a ui-sref="two">图片瀑布流</a></li>
+		<li><a ui-sref="poiTest">poi import</a></li>
 	</ul>
 </div>
 <div id="content">
@@ -29,6 +30,7 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.12.2.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular1.5.3.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ui-bootstrap-tpls-1.3.3.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular-animate.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular-ui-router.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/loading-bar.min.js"></script>

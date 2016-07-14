@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-public class MyCtrl {
+public class MainCtrl {
 
 
 	@Autowired
 	private HttpServletRequest request;
 
 
-	@RequestMapping(value = {"/one.req","/two.req","/home.req"},method = RequestMethod.GET)
+	@RequestMapping(value = {"/one.req","/two.req","/home.req","/poiTest.req"},method = RequestMethod.GET)
 	public String requests() {
 
 		System.out.println("hahah");
@@ -31,6 +31,8 @@ public class MyCtrl {
 				return "two";
 			case "/home.req":
 				return "default";
+			case "/poiTest.req":
+				return "poiTest";
 			default:
 				return "";
 		}
