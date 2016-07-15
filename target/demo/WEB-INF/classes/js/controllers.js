@@ -65,14 +65,22 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
 		{id: 'photo-16', name: 'Lovely photo', src: 'http://lorempixel.com/400/300/nightlife'},
 		{id: 'photo-17', name: 'A "wow" photo', src: 'http://lorempixel.com/400/300/nature'},
 		{id: 'photo-18', name: 'Bodacious photo', src: 'http://lorempixel.com/400/300/abstract'},
-		{id: 'photo-19', name: 'Bodacious photo', src: 'http://d.hiphotos.baidu.com/image/pic/item/2cf5e0fe9925bc3157dbbede5bdf8db1ca1370f5.jpg'},
-		{id: 'photo-19', name: 'Bodacious photo', src: 'http://img5.imgtn.bdimg.com/it/u=3603943369,1952417318&fm=21&gp=0.jpg'}
+		{
+			id: 'photo-19',
+			name: 'Bodacious photo',
+			src: 'http://d.hiphotos.baidu.com/image/pic/item/2cf5e0fe9925bc3157dbbede5bdf8db1ca1370f5.jpg'
+		},
+		{
+			id: 'photo-19',
+			name: 'Bodacious photo',
+			src: 'http://img5.imgtn.bdimg.com/it/u=3603943369,1952417318&fm=21&gp=0.jpg'
+		}
 	];
 
 
 	$scope.info = function (x) {
 
-		alert("hello: picture "+x);
+		alert("hello: picture " + x);
 
 	};
 }]);
@@ -81,11 +89,13 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
  *   POI test controller
  *
  **/
-app.controller('poiCtrl', ["$scope","$uibModal","$log", function ($scope, $uibModal, $log) {
+app.controller('poiCtrl', ["$scope", "$uibModal", "$log", "baseMethod", function ($scope, $uibModal, $log, baseMethod) {
+
 	$scope.items = ['item1', 'item2', 'item3'];
 
 	$scope.animationsEnabled = true;
 
+	/**   弹出菜单点击事件  **/
 	$scope.hello = function () {
 
 		var modalInstance = $uibModal.open({
@@ -98,6 +108,8 @@ app.controller('poiCtrl', ["$scope","$uibModal","$log", function ($scope, $uibMo
 					return $scope.items;
 				}
 			}
+
+
 		});
 
 		modalInstance.result.then(function (selectedItem) {
@@ -107,6 +119,29 @@ app.controller('poiCtrl', ["$scope","$uibModal","$log", function ($scope, $uibMo
 		});
 
 	};
+
+	/**   table datas  **/
+	function getAllStudentsInfo(pageNo) {
+
+		baseMethod.toGetProfitDatas(pageNo).then(function (result) {
+
+			$scope.datas = result.data.content;
+			$scope.totalItems = result.data.totalElements;
+			$scope.pageCount = result.data.totalPages;
+
+		});
+	}
+
+
+	getAllStudentsInfo(1);
+
+	$scope.onPageChange = function () {
+
+		getAllStudentsInfo($scope.currentPage);
+
+	};
+
+
 }]);
 
 app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {

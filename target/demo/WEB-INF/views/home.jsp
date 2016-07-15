@@ -5,14 +5,18 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ng-pagination.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/loading-bar.min.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/glyphicons-filetypes.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/glyphicons-halflings.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/glyphicons-regular.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/glyphicons-social.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/my.css">
 </head>
 <body>
 
 <div id="header">
-	<span style="margin-left:20px;"><a href="#">PRACTICES MAKE PREFECT: Demo of testing shiro functions and angular ui-router </a></span>
-	<button class="btn btn-primary btn-sm header-login-btn">注册</button>
-	<button class="btn btn-primary btn-sm header-login-btn">登陆</button>
+	<span style="margin-left:20px;"><a href="#"><i class=" glyphicon glyphicon-home"></i>  PRACTICES MAKE PREFECT: Demo of testing shiro functions and angular ui-router </a></span>
+	<button class="btn btn-primary btn-sm header-login-btn"><i class=" glyphicon glyphicon-registration-mark"></i> 注册</button>
+	<button class="btn btn-primary btn-sm header-login-btn"><i class=" glyphicon glyphicon-log-in"></i> 登陆</button>
 </div>
 <div id="side">
 	<ul>

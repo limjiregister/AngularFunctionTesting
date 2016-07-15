@@ -110,30 +110,12 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 			});
 
 		},
-		toDelStudent: function (id) {
+		toGetProfitDatas:function (pageNo) {
+			//启动loading
+			cfpLoadingBar.start();
 
-			var args = {"id": id};
-			var url = "toDelStudent.req";
-
-			return $http({
-				method: 'POST',
-				data: args,
-				url: url
-			}).success(function (response) {
-
-				return response;
-
-			}).error(function (response, status) {
-
-				alert(status + response);
-
-			});
-
-		},
-		toUpdateStudent: function (student) {
-
-			var args = {"student": angular.toJson(student)};
-			var url = "toUpdateStudent.req";
+			var args = {"pageNO": pageNo};
+			var url = "profitDatas.req";
 
 			return $http({
 				method: 'POST',
@@ -141,14 +123,13 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 				url: url
 			}).success(function (response) {
 
-				return response;
+				return respose;
 
 			}).error(function (response, status) {
 
 				alert(status + response);
 
 			});
-
 		}
 
 	};

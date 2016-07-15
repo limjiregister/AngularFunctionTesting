@@ -22,41 +22,12 @@ public class StudentCtrl {
 	@Autowired
 	private StudentService studentService;
 
-
 	@ResponseBody
 	@RequestMapping(value = "toGetAllStudent", method = RequestMethod.POST)
 	public Page<Student> toGetAllStudent(@RequestParam("pageNo") Integer pageNo) {
 
-		System.out.println(pageNo);
-
 		return studentService.getAllStudents(pageNo);
 
-	}
-
-
-	@ResponseBody
-	@RequestMapping(value = "toDelStudent", method = RequestMethod.POST)
-	public String toDelStudent(@RequestParam("id") Integer id) {
-
-		if (studentService.toDelOneStudent(id)) {
-
-			return "1";
-		} else {
-
-			return "0";
-		}
-	}
-
-
-	@ResponseBody
-	@RequestMapping(value = "toUpdateStudent", method = RequestMethod.POST)
-	public String toUpdateStudent(@RequestParam("student") String student) {
-
-		Student student1 = com.alibaba.fastjson.JSON.parseObject(student, Student.class);
-
-		studentService.toUpdateOneStudent(student1);
-
-		return "1";
 	}
 
 }
