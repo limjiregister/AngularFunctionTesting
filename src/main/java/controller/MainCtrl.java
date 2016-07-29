@@ -22,7 +22,7 @@ public class MainCtrl {
 	@RequestMapping(value = {"/one.req", "/two.req", "/home.req", "/poiTest.req"}, method = RequestMethod.GET)
 	public String requests() {
 
-		System.out.println("hahah");
+		System.out.println("测试数据来的呀！@");
 
 		String s = request.getRequestURI();
 		if (s.equals("/one.req")) {
