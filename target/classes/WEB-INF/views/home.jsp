@@ -38,6 +38,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular-animate.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular-ui-router.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/loading-bar.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ng-file-upload-shim.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/angular-deckgrid.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/app.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/si-table.min.js"></script>

@@ -144,18 +144,45 @@ app.controller('poiCtrl', ["$scope", "$uibModal", "$log", "baseMethod", function
 
 }]);
 
-app.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
-	$scope.items = items;
-	$scope.selected = {
-		item: $scope.items[0]
-	};
+app.controller('ModalInstanceCtrl', ['$scope','$uibModalInstance','items','Upload',function ($scope, $uibModalInstance, items,Upload) {
 
 	$scope.ok = function () {
-		$uibModalInstance.close($scope.selected.item);
+
+		if ($scope.file) {
+
+			$scope.upload($scope.file);
+
+		} else {
+
+			alert("sorry, you didn't choose anything,please choose me and then do it again");
+
+		}
+	};
+
+	/**
+	 * 上传的方法
+	 * @param file: the file customer choose to upload
+	 */
+	$scope.upload = function (file) {
+
+		Upload.upload({
+			url:"/upLoadFile.req",
+			data:{"file":file}
+		}).then(function (result) {
+
+			console.log(result);
+			if (result.statusText=="OK") {
+
+				alert("upload success!!!");
+
+			}
+
+		});
+
 	};
 
 	$scope.cancel = function () {
 		$uibModalInstance.dismiss('cancel');
 	};
-});
+
+}]);

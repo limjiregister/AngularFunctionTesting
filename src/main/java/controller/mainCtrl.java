@@ -23,18 +23,19 @@ public class MainCtrl {
 	public String requests() {
 
 		System.out.println("hahah");
-		switch (request.getRequestURI()){
 
-			case "/one.req":
-				return "one";
-			case "/two.req":
-				return "two";
-			case "/home.req":
-				return "default";
-			case "/poiTest.req":
-				return "poiTest";
-			default:
-				return "";
+		String s = request.getRequestURI();
+		if (s.equals("/one.req")) {
+			return "one";
+		} else if (s.equals("/two.req")) {
+			return "two";
+		} else if (s.equals("/home.req")) {
+			System.out.println("homesdfsdfd");
+			return "default";
+		} else if (s.equals("/poiTest.req")) {
+			return "poiTest";
+		} else {
+			return "";
 		}
 
 	}

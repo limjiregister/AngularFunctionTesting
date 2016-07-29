@@ -1,6 +1,6 @@
 /** Created on 2016/7/3 */
 var app = angular.module("myapp",
-	["ui.router", 'akoenig.deckgrid', 'ui.bootstrap','ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar']).config(
+	["ui.router", 'akoenig.deckgrid', 'ui.bootstrap','ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar','ngFileUpload']).config(
 	['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = false;
 	}]);
