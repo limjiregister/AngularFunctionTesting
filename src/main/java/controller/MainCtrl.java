@@ -19,7 +19,7 @@ public class MainCtrl {
 	private HttpServletRequest request;
 
 
-	@RequestMapping(value = {"/one.req","/two.req","/home.req","/poiTest.req"},method = RequestMethod.GET)
+	@RequestMapping(value = {"/one.req", "/two.req", "/home.req", "/poiTest.req"}, method = RequestMethod.GET)
 	public String requests() {
 
 		System.out.println("hahah");
