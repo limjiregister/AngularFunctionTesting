@@ -22,19 +22,26 @@ public class MainCtrl {
 	@RequestMapping(value = {"/one.req", "/two.req", "/home.req", "/poiTest.req"}, method = RequestMethod.GET)
 	public String requests() {
 
-		System.out.println("测试数据来的呀！@");
+//		String path = request.getContextPath();
+//		String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
-		String s = request.getRequestURI();
+		String s = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/"), request.getRequestURI().length());
+//		System.out.println("the request url:"+s);
+//		String s = request.getRequestURI();
+
+
 		if (s.equals("/one.req")) {
 			return "one";
 		} else if (s.equals("/two.req")) {
 			return "two";
 		} else if (s.equals("/home.req")) {
+			System.out.println("requesturl---home：：" + s);
 			System.out.println("homesdfsdfd");
 			return "default";
 		} else if (s.equals("/poiTest.req")) {
 			return "poiTest";
 		} else {
+			System.out.println("requesturl---null：：" + s);
 			return "";
 		}
 
