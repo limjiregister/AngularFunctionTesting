@@ -1,7 +1,6 @@
 package controller;
 
 import domain.Profit;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -11,10 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import service.ProfitService;
+import tools.ExcelTools;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class ProfitCtrl {
@@ -50,11 +50,21 @@ public class ProfitCtrl {
 	@RequestMapping(value = "/upLoadFile.req", method = RequestMethod.POST)
 	public String upLoadExcelFile(@RequestParam("file") MultipartFile file) {
 
-		String path = request.getServletContext().getRealPath("/saveFile/");
+//		String path = request.getServletContext().getRealPath("/saveFile/");
 
 		try {
 
-			FileUtils.copyInputStreamToFile(file.getInputStream(),new File(path,file.getOriginalFilename()));
+//			FileUtils.copyInputStreamToFile(file.getInputStream(),new File(path,file.getOriginalFilename()));
+
+
+			ExcelTools tools = new ExcelTools();
+
+			List<Profit> list=tools.getDataFromExcel(file.getInputStream());
+
+			if (list.size() != 0) {
+
+				profitService.toSavePartData(list);
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

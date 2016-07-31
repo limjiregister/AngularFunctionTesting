@@ -21,7 +21,7 @@
 	<!--
 	   * to scan the spring annotation
 		-->
-	<context:component-scan base-package = "service">
+	<context:component-scan base-package = "service,tools">
 		<context:exclude-filter type = "annotation"
 		                        expression = "org.springframework.web.bind.annotation.ControllerAdvice" />
 		<context:exclude-filter type = "annotation" expression = "org.springframework.stereotype.Controller" />

@@ -209,8 +209,7 @@ public class Profit {
 
 	}
 
-	public Profit(Integer id, String businessNo, String salesman, Integer salePrice, Integer profits, Integer costPrice, String shipper, String recipient, String cuctomerService, String finishTime, String shipmentTime, String deliverTime, String businessTime, String recordingPerson, String contType, String contNum, String destination, String feeType, String payType, String businessType, String department) {
-		this.id = id;
+	public Profit(String businessNo, String salesman, Integer salePrice, Integer profits, Integer costPrice, String shipper, String recipient, String cuctomerService, String finishTime, String shipmentTime, String deliverTime, String businessTime, String recordingPerson, String contType, String contNum, String destination, String feeType, String payType, String businessType, String department) {
 		this.businessNo = businessNo;
 		this.salesman = salesman;
 		this.salePrice = salePrice;
