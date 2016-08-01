@@ -85,10 +85,10 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
 	};
 }]);
 
+
 /**
- *   POI test controller
- *
- **/
+ * POI test controller
+ */
 app.controller('poiCtrl',
 	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', function ($scope, $uibModal, $log, baseMethod, $rootScope) {
 
@@ -138,17 +138,45 @@ app.controller('poiCtrl',
 		};
 
 		/**   导出数据  **/
-
+		/**   初始化checkbox容器，保存已经选择的id  **/
+		$scope.checkbox = [];
 		$scope.exportData = function () {
 
+			if ($scope.checkbox.length != 0) {
+				/**   获取已经选择的id  **/
+				var goalArr = [];
 
+				for (var i in $scope.checkbox) {
 
+					goalArr.push(parseInt(i));
 
+				}
+
+			} else {
+				alert("请选择要导出的数据.....");
+			}
 
 		};
 
+		/**   监听全选 按钮  **/
 
-		/**   table datas  **/
+		$scope.selAllOrNot = function () {
+
+			if ($scope.selectAll) {
+
+				$scope.checkbox = [];
+				angular.forEach($scope.datas, function (item) {
+
+					$scope.checkbox[item.id] = true;
+				});
+
+			} else {
+				$scope.checkbox = [];
+			}
+		};
+
+
+		/**   请求数据 table datas  **/
 		function getAllStudentsInfo(pageNo) {
 
 			baseMethod.toGetProfitDatas(pageNo).then(function (result) {
@@ -173,6 +201,8 @@ app.controller('poiCtrl',
 
 		$scope.onPageChange = function () {
 
+			/**   把勾选的去掉  **/
+			$scope.selectAll = false;
 			getAllStudentsInfo($scope.currentPage);
 
 		};
@@ -196,31 +226,63 @@ app.controller('ModalInstanceCtrl',
 			}
 		};
 
+		/**   检测文件后缀名是否符合要求  **/
+		$scope.seefile = function (file) {
+
+			var fileName = file.name;
+			var begin = fileName.lastIndexOf(".");
+			var end = fileName.length;
+			var getName = fileName.substring(begin, end);
+			if (getName == "xlxs") {
+
+				$scope.isOkFile = true;
+
+			} else {
+
+				$scope.isOkFile = false;
+
+			}
+
+		};
+
+
 		/**
 		 * 上传的方法
 		 * @param file: the file customer choose to upload
 		 */
 		$scope.upload = function (file) {
 
-			$uibModalInstance.dismiss('cancel');
-			$rootScope.showLoading = true;
-			Upload.upload({
-				url: "/upLoadFile.req",
-				data: {"file": file}
-			}).then(function (result) {
+			if ($scope.isOkFile) {
 
-				if (result.statusText == "OK") {
+				/**   退出弹出框  **/
+				$uibModalInstance.dismiss('cancel');
+				/**   显示加载动画  **/
+				$rootScope.showLoading = true;
 
-					$rootScope.showLoading = false;
-					$rootScope.showAlertToggle = true;
+				Upload.upload({
+					url: "/upLoadFile.req",
+					data: {"file": file}
+				}).then(function (result) {
 
-				} else {
+					if (result.statusText == "OK") {
 
-					$rootScope.showLoading = false;
-					alert("上传失败！！");
-				}
+						$rootScope.showLoading = false;
+						$rootScope.showAlertToggle = true;
 
-			});
+					} else {
+
+						$rootScope.showLoading = false;
+						alert("上传失败！！");
+					}
+
+				});
+
+
+			} else {
+
+				alert("请重新选择后缀名为xlxs的excel文件.....");
+
+			}
 
 		};
 

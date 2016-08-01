@@ -50,7 +50,7 @@
 	<table class="table table-hover table-bordered" si-table>
 		<thead>
 		<tr>
-			<th><input type="checkbox" ng-model="selectAll"></th>
+			<th><input type="checkbox" ng-model="selectAll" ng-change="selAllOrNot()"></th>
 			<th ng-click="predicate='businessNo'; reverse=!reverse">业务编号</th>
 			<th ng-click="predicate='salesman'; reverse=!reverse">业务员</th>
 			<th ng-click="predicate='salePrice'; reverse=!reverse">销售价</th>
@@ -75,7 +75,7 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="i in datas | filter:filter|orderBy:predicate:reverse">
-			<td><input type="checkbox" ng-checked="selectAll" ng-model="checkbox.sel[i.id]"></td>
+			<td><input type="checkbox" ng-checked="selectAll" ng-model="checkbox[i.id]"></td>
 			<td>{{ i.businessNo }}</td>
 			<td>{{ i.salesman }}</td>
 			<td>{{ i.salePrice }}</td>
@@ -127,7 +127,7 @@
 	</div>
 	<div class="modal-body">
 
-		<input type="file" ngf-select ng-model="file">
+		<input type="file" ngf-select ng-model="file"  ng-change="seefile(file)">
 
 	</div>
 	<div class="modal-footer">
