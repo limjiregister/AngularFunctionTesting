@@ -1,16 +1,23 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2016/7/14
-  Time: 16:32
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
 	<title>poiTest</title>
 </head>
 <body>
+
+<!--  顶端弹出alert提示信息 -->
+<div uib-alert ng-if="showAlertToggle" template-url="alert.html" class="alertTipBg aaa">UpLoad Success!!
+	<button ng-click="closeAlert()" class="alertTipBtn">X</button>
+</div>
+
+
+<div unselectable="on" class="loading_bg" ng-if="showLoading">
+
+	<div class="loading">
+		<img src="/images/loading2.gif"/><span ng-bind="loading_text"></span>
+	</div>
+
+</div>
 
 <div class="btn-group btn-group-sm">
 	<label class="btn btn-lg btn-info" ng-model="checkModel.left"
@@ -32,9 +39,9 @@
 
 	<!-- uib-dropdown-menu 子菜单  -->
 	<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
-		<li role="menuitem"><a href=" javascript:void(0)" ng-click="hello()">从excel导入数据库</a></li>
+		<li role="menuitem"><a href=" javascript:void(0)" ng-click="importData()">从excel导入数据库</a></li>
 		<li class="divider"></li>
-		<li role="menuitem"><a href=" javascript:void(0)">导出数据集到excel</a></li>
+		<li role="menuitem"><a href=" javascript:void(0)" ng-click="exportData()">导出数据集到excel</a></li>
 	</ul>
 </div>
 
@@ -43,7 +50,7 @@
 	<table class="table table-hover table-bordered" si-table>
 		<thead>
 		<tr>
-			<th ng-click="predicate='id'; reverse=!reverse">序号</th>
+			<th><input type="checkbox" ng-model="selectAll"></th>
 			<th ng-click="predicate='businessNo'; reverse=!reverse">业务编号</th>
 			<th ng-click="predicate='salesman'; reverse=!reverse">业务员</th>
 			<th ng-click="predicate='salePrice'; reverse=!reverse">销售价</th>
@@ -68,7 +75,7 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="i in datas | filter:filter|orderBy:predicate:reverse">
-			<td>{{$index+1}}</td>
+			<td><input type="checkbox" ng-checked="selectAll" ng-model="checkbox.sel[i.id]"></td>
 			<td>{{ i.businessNo }}</td>
 			<td>{{ i.salesman }}</td>
 			<td>{{ i.salePrice }}</td>
@@ -99,8 +106,8 @@
 <div>
 	<div style="float: left;" ng-show="datas!=null||datas!=''">
 
-	<pager page-count="pageCount" current-page="currentPage" on-page-change="onPageChange()" first-text="首页"
-		   next-text="下一页" prev-text="上一页" last-text="尾页" show-goto="true" goto-text="跳转到"></pager>
+		<pager page-count="pageCount" current-page="currentPage" on-page-change="onPageChange()" first-text="首页"
+			   next-text="下一页" prev-text="上一页" last-text="尾页" show-goto="true" goto-text="跳转到"></pager>
 
 	</div>
 	<div style="float: right;margin-right: 10px;margin-left: 20px">
@@ -127,6 +134,10 @@
 		<button class="btn btn-primary" type="button" ng-click="ok()">Import</button>
 		<button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 	</div>
+</script>
+
+<script type="text/ng-template" id="alert.html">
+	<div ng-transclude></div>
 </script>
 
 </html>

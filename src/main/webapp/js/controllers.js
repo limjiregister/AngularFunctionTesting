@@ -89,100 +89,143 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
  *   POI test controller
  *
  **/
-app.controller('poiCtrl', ["$scope", "$uibModal", "$log", "baseMethod", function ($scope, $uibModal, $log, baseMethod) {
+app.controller('poiCtrl',
+	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', function ($scope, $uibModal, $log, baseMethod, $rootScope) {
 
-	$scope.items = ['item1', 'item2', 'item3'];
+		// alert(message);
+		/**
+		 * alert顶端关闭按钮
+		 */
+		$rootScope.showAlertToggle = false;
+		$scope.closeAlert = function () {
 
-	$scope.animationsEnabled = true;
+			$rootScope.showAlertToggle = false;
 
-	/**   弹出菜单点击事件  **/
-	$scope.hello = function () {
+		};
 
-		var modalInstance = $uibModal.open({
-			animation: $scope.animationsEnabled,
-			templateUrl: 'myModalContent.html',
-			controller: 'ModalInstanceCtrl',
-			size: "lg",
-			resolve: {
-				items: function () {
-					return $scope.items;
+
+		/**  loading图标初始化不显示 **/
+		$rootScope.showLoading = false;
+		/**   设置loading的显示文字  **/
+		$scope.loading_text = "数据加载中.......";
+
+		$scope.items = ['item1', 'item2', 'item3'];
+
+		$scope.animationsEnabled = true;
+
+		/**   弹出菜单点击事件  导入数据**/
+		$scope.importData = function () {
+
+			var modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: 'myModalContent.html',
+				controller: 'ModalInstanceCtrl',
+				size: "lg",
+				resolve: {
+					items: function () {
+						return $scope.items;
+					}
 				}
-			}
+
+			});
+
+			modalInstance.result.then(function (selectedItem) {
+				$scope.selected = selectedItem;
+			}, function () {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
+
+		};
+
+		/**   导出数据  **/
+
+		$scope.exportData = function () {
 
 
-		});
-
-		modalInstance.result.then(function (selectedItem) {
-			$scope.selected = selectedItem;
-		}, function () {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
-
-	};
-
-	/**   table datas  **/
-	function getAllStudentsInfo(pageNo) {
-
-		baseMethod.toGetProfitDatas(pageNo).then(function (result) {
-
-			$scope.datas = result.data.content;
-			$scope.totalItems = result.data.totalElements;
-			$scope.pageCount = result.data.totalPages;
-
-		});
-	}
 
 
-	getAllStudentsInfo(1);
 
-	$scope.onPageChange = function () {
-
-		getAllStudentsInfo($scope.currentPage);
-
-	};
+		};
 
 
-}]);
+		/**   table datas  **/
+		function getAllStudentsInfo(pageNo) {
 
-app.controller('ModalInstanceCtrl', ['$scope','$uibModalInstance','items','Upload',function ($scope, $uibModalInstance, items,Upload) {
+			baseMethod.toGetProfitDatas(pageNo).then(function (result) {
 
-	$scope.ok = function () {
+				if (result.data.content.length != 0) {
 
-		if ($scope.file) {
+					$scope.datas = result.data.content;
+					$scope.totalItems = result.data.totalElements;
+					$scope.pageCount = result.data.totalPages;
 
-			$scope.upload($scope.file);
+				} else {
 
-		} else {
+					alert("数据库返回的数据为空.......");
 
-			alert("sorry, you didn't choose anything,please choose me and then do it again");
+				}
 
+			});
 		}
-	};
 
-	/**
-	 * 上传的方法
-	 * @param file: the file customer choose to upload
-	 */
-	$scope.upload = function (file) {
 
-		Upload.upload({
-			url:"/upLoadFile.req",
-			data:{"file":file}
-		}).then(function (result) {
+		getAllStudentsInfo(1);
 
-			console.log(result);
-			if (result.statusText=="OK") {
+		$scope.onPageChange = function () {
 
-				alert("upload success!!!");
+			getAllStudentsInfo($scope.currentPage);
+
+		};
+
+
+	}]);
+
+app.controller('ModalInstanceCtrl',
+	['$scope', '$uibModalInstance', 'items', 'Upload', '$rootScope', function ($scope, $uibModalInstance, items, Upload, $rootScope) {
+
+		$scope.ok = function () {
+
+			if ($scope.file) {
+
+				$scope.upload($scope.file);
+
+			} else {
+
+				alert("sorry, you didn't choose anything,please choose me and then do it again");
 
 			}
+		};
 
-		});
+		/**
+		 * 上传的方法
+		 * @param file: the file customer choose to upload
+		 */
+		$scope.upload = function (file) {
 
-	};
+			$uibModalInstance.dismiss('cancel');
+			$rootScope.showLoading = true;
+			Upload.upload({
+				url: "/upLoadFile.req",
+				data: {"file": file}
+			}).then(function (result) {
 
-	$scope.cancel = function () {
-		$uibModalInstance.dismiss('cancel');
-	};
+				if (result.statusText == "OK") {
 
-}]);
+					$rootScope.showLoading = false;
+					$rootScope.showAlertToggle = true;
+
+				} else {
+
+					$rootScope.showLoading = false;
+					alert("上传失败！！");
+				}
+
+			});
+
+		};
+
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss('cancel');
+		};
+
+	}]);

@@ -1,3 +1,8 @@
+html.ng-scope {
+	margin-left: 0px !important;
+	margin-top: 0px !important;
+}
+
 #side {
 
 	float: left;
@@ -34,52 +39,41 @@
 	margin-right: 20px;
 }
 
-/*animation templations*/
-
+/* line 491, ../sass/ng-animation.scss */
 .aaa.ng-enter {
-	transform: translateX(60px);
-	-ms-transform: translateX(60px);
-	-webkit-transform: translateX(60px);
+	transform: translateY(-240px);
+	-ms-transform: translateY(-240px);
+	-webkit-transform: translateY(-240px);
 	transition-duration: 250ms;
 	-webkit-transition-duration: 250ms;
 	opacity: 0;
 }
 
-/* line 171, ../sass/ng-animation.scss */
-.aaa.ng-enter {
-	transform: translateX(-60px);
-	-ms-transform: translateX(-60px);
-	-webkit-transform: translateX(-60px);
-	transition-duration: 250ms;
-	-webkit-transition-duration: 250ms;
-	opacity: 0;
-}
-
-/* line 225, ../sass/ng-animation.scss */
-.stage.ng-enter-active {
-	transform: translateX(0);
-	-ms-transform: translateX(0);
-	-webkit-transform: translateX(0);
+/* line 497, ../sass/ng-animation.scss */
+.aaa.ng-enter-active {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
 	opacity: 1;
 }
 
-/* line 230, ../sass/ng-animation.scss */
-.stage.ng-leave {
-	transform: translateX(0);
-	-ms-transform: translateX(0);
-	-webkit-transform: translateX(0);
+/* line 502, ../sass/ng-animation.scss */
+.aaa.ng-leave {
+	transform: translateY(0);
+	-ms-transform: translateY(0);
+	-webkit-transform: translateY(0);
 	transition-duration: 250ms;
 	-webkit-transition-duration: 250ms;
 	opacity: 1;
 }
 
-.stage.ng-leave-active {
-	transform: translateX(-60px);
-	-ms-transform: translateX(-60px);
-	-webkit-transform: translateX(-60px);
+/* line 508, ../sass/ng-animation.scss */
+.aaa.ng-leave-active {
+	transform: translateY(-240px);
+	-ms-transform: translateY(-240px);
+	-webkit-transform: translateY(-240px);
 	opacity: 0;
 }
-
 
 /*图片瀑布流的样式设置*/
 /*图片排列一行*/
@@ -142,4 +136,64 @@
 
 .photo .photo-description {
 	padding: 15px;
+}
+
+/*loading icon position*/
+.loading {
+	position: absolute;
+	top: 50%;
+	background: #00000000;
+	width: 330px;
+	height: 72px;
+	left: 50%;
+	margin-top: -86px;
+	margin-left: -120px;
+	text-align: center;
+	color: white;
+	font-size: 20px;
+}
+
+
+/*loading 的背景遮罩层*/
+.loading_bg {
+
+	background: #000;
+	filter: alpha(opacity=5);
+	opacity: .5;
+	left: 0px;
+	top: 0px;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	z-index: 10000;
+	margin-left: 0px !important;
+	margin-top: 0px !important;
+}
+
+/*顶部提示条的关闭按钮 样式*/
+.alertTipBg {
+
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	background-color: #3c763d;
+	color: white;
+	font-size: 28px;
+	border-radius: 1px;
+	text-align: center;
+	z-index: 9999;
+	margin-left: 0px;
+	margin-top: 0px;
+}
+
+/*alert退出按钮*/
+.alertTipBtn {
+	float: right;
+	margin-right: 20px;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	font-size: 15px;
 }

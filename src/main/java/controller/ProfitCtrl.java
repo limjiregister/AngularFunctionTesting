@@ -135,7 +135,7 @@ public class ProfitCtrl {
 
 				}
 
-				goalData.add(new Profit(tempSaveData.get(0), tempSaveData.get(1), tempSaveData.get(2).equals("") ? 0 : Integer.parseInt(tempSaveData.get(2)), tempSaveData.get(3).equals("") ? 0 : Integer.parseInt(tempSaveData.get(3)), tempSaveData.get(4).equals("") ? 0 : Integer.parseInt(tempSaveData.get(4)), tempSaveData.get(5), tempSaveData.get(6), tempSaveData.get(7), tempSaveData.get(8), tempSaveData.get(9), tempSaveData.get(10), tempSaveData.get(11), tempSaveData.get(12), tempSaveData.get(13), tempSaveData.get(14), tempSaveData.get(15), tempSaveData.get(16), tempSaveData.get(17), tempSaveData.get(18), tempSaveData.get(19)));
+				goalData.add(new Profit(tempSaveData.get(0), tempSaveData.get(1), tempSaveData.get(2).equals("") ? 0 : Float.parseFloat(tempSaveData.get(2)), tempSaveData.get(3).equals("") ? 0 : Float.parseFloat(tempSaveData.get(3)), tempSaveData.get(4).equals("") ? 0 : Float.parseFloat(tempSaveData.get(4)), tempSaveData.get(5), tempSaveData.get(6), tempSaveData.get(7), tempSaveData.get(8), tempSaveData.get(9), tempSaveData.get(10), tempSaveData.get(11), tempSaveData.get(12), tempSaveData.get(13), tempSaveData.get(14), tempSaveData.get(15), tempSaveData.get(16), tempSaveData.get(17), tempSaveData.get(18), tempSaveData.get(19)));
 				tempSaveData.clear();
 
 
@@ -196,10 +196,19 @@ public class ProfitCtrl {
 
 				} else {
 
-					/**   纯数字的单元格，需要转为string再读取，否则出错  **/
-					cell.setCellType(Cell.CELL_TYPE_STRING);
-					result = cell.getStringCellValue();
+					/**   纯数字的单元格，需要转为string再读取，否则出错 ：要特别处理小数点 **/
+					// 返回数值类型的值
+					Object inputValue = null;// 单元格值
+					Long longVal = Math.round(cell.getNumericCellValue());
+					Double doubleVal = cell.getNumericCellValue();
 
+					if (Double.parseDouble(longVal + ".0") == doubleVal) {   //判断是否含有小数位.0
+						inputValue = longVal;
+					} else {
+						inputValue = doubleVal;
+					}
+
+					result = String.valueOf(inputValue);
 				}
 
 				break;

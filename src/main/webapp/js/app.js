@@ -1,6 +1,6 @@
 /** Created on 2016/7/3 */
 var app = angular.module("myapp",
-	["ui.router", 'akoenig.deckgrid', 'ui.bootstrap','ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar','ngFileUpload']).config(
+	["ui.router", 'akoenig.deckgrid', 'ui.bootstrap', 'ngAnimate', "ng-pagination", "siTable", 'angular-loading-bar', 'ngFileUpload']).config(
 	['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
 		cfpLoadingBarProvider.includeSpinner = false;
 	}]);
@@ -21,9 +21,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 		controller: "twoCtrl"
 
 	}).state("poiTest", {
-		url:"/poiTest",
-		templateUrl:"poiTest.req",
-		controller:"poiCtrl"
+		url: "/poiTest",
+		templateUrl: "poiTest.req",
+		controller: "poiCtrl"
 	}).state("default", {
 		url: "/default",
 		templateUrl: "home.req",
@@ -110,7 +110,7 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 			});
 
 		},
-		toGetProfitDatas:function (pageNo) {
+		toGetProfitDatas: function (pageNo) {
 			//启动loading
 			cfpLoadingBar.start();
 
@@ -123,11 +123,11 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 				url: url
 			}).success(function (response) {
 
-				return respose;
+				return response;
 
 			}).error(function (response, status) {
 
-				alert(status + response);
+				alert("数据库无返回数据.......错误代码：" + status);
 
 			});
 		}

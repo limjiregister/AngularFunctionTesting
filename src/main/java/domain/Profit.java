@@ -14,9 +14,9 @@ public class Profit {
 	private Integer id;
 	private String businessNo;
 	private String salesman;
-	private Integer salePrice;
-	private Integer profits;
-	private Integer costPrice;
+	private float salePrice;
+	private float profits;
+	private float costPrice;
 	private String shipper;
 	private String recipient;
 	private String cuctomerService;
@@ -60,27 +60,27 @@ public class Profit {
 		this.salesman = salesman;
 	}
 
-	public Integer getSalePrice() {
+	public float getSalePrice() {
 		return salePrice;
 	}
 
-	public void setSalePrice(Integer salePrice) {
+	public void setSalePrice(float salePrice) {
 		this.salePrice = salePrice;
 	}
 
-	public Integer getProfits() {
+	public float getProfits() {
 		return profits;
 	}
 
-	public void setProfits(Integer profits) {
+	public void setProfits(float profits) {
 		this.profits = profits;
 	}
 
-	public Integer getCostPrice() {
+	public float getCostPrice() {
 		return costPrice;
 	}
 
-	public void setCostPrice(Integer costPrice) {
+	public void setCostPrice(float costPrice) {
 		this.costPrice = costPrice;
 	}
 
@@ -209,7 +209,7 @@ public class Profit {
 
 	}
 
-	public Profit(String businessNo, String salesman, Integer salePrice, Integer profits, Integer costPrice, String shipper, String recipient, String cuctomerService, String finishTime, String shipmentTime, String deliverTime, String businessTime, String recordingPerson, String contType, String contNum, String destination, String feeType, String payType, String businessType, String department) {
+	public Profit(String businessNo, String salesman, float salePrice, float profits, float costPrice, String shipper, String recipient, String cuctomerService, String finishTime, String shipmentTime, String deliverTime, String businessTime, String recordingPerson, String contType, String contNum, String destination, String feeType, String payType, String businessType, String department) {
 		this.businessNo = businessNo;
 		this.salesman = salesman;
 		this.salePrice = salePrice;
