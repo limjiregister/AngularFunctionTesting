@@ -156,6 +156,12 @@ app.controller('poiCtrl',
 				/**   发送导出的请求，发送要导出的数据的id的集合  **/
 				baseMethod.exportDataRequst(angular.toJson(goalArr)).then(function (result) {
 
+
+
+
+
+
+
 				});
 
 			} else {

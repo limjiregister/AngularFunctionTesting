@@ -132,7 +132,7 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 			});
 		},
 		exportDataRequst: function (array) {
-			/**   上传是52的方法  **/
+			/**   上传的方法  **/
 
 			var args = {"array": array};
 			var url = "toExportData.req";
@@ -143,7 +143,6 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 				url: url
 			}).success(function (response) {
 
-				console.log(response);
 				return response;
 
 			}).error(function (response, status) {

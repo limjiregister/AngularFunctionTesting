@@ -3,12 +3,15 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import domain.Profit;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,8 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import service.ProfitService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -230,16 +232,84 @@ public class ProfitCtrl {
 		return result;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/toExportData.req", method = RequestMethod.POST)
-	public String exportRequest(@RequestParam("array") String arr) {
+	public ResponseEntity<byte[]> exportRequest(@RequestParam("array") String arr) {
 
-		System.out.println("the export request data is:" + arr);
 
 		JSONArray array = JSON.parseArray(arr);
 
+		List<Integer> list = new ArrayList<>();
 
-		return "";
+		for (int i = 0; i < array.size(); i++) {
+
+			list.add((Integer) array.get(i));
+		}
+
+		ResponseEntity<byte[]> responseEntity = null;
+
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		byte[] body = null;
+		InputStream is = null;
+		try {
+			createExcelFile().write(os);
+//			body = os.toByteArray();
+
+			body = FileUtils.readFileToByteArray(new File("E:/export.xlsx"));
+
+			System.out.println("读取 输入流.....");
+			HttpHeaders headers = new HttpHeaders();
+			HttpStatus httpStatus = HttpStatus.OK;
+
+			System.out.println("设置headers。。。。");
+
+			headers.add("Content-Disposition", "attachment;filename=export.xlsx");
+			headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+
+			System.out.println("headers is: " + headers);
+
+			responseEntity = new ResponseEntity<byte[]>(body, headers, httpStatus);
+
+			System.out.println("responseEntity:" + responseEntity);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return responseEntity;
+	}
+
+
+	public Workbook createExcelFile() {
+
+
+		XSSFWorkbook wb = new XSSFWorkbook();
+
+		XSSFSheet sheet = wb.createSheet("exportData");
+
+		String[] titles = {"业务编号", "业务员", "销售价", "利润", "成本价", "托运方", "收货方", "客服", "实际完成时间", "实际装货时间", "实际送货时间", "实际业务时间", "录单人", "柜型", "柜量", "目的地", "费用类型", "付款方式", "业务类型", "业务部门"};
+
+		XSSFRow headerRow = sheet.createRow(0);
+
+		for (int i = 0; i < titles.length; i++) {
+
+			XSSFCell cell = headerRow.createCell(i);
+			sheet.setColumnWidth(i, 6000);
+
+			CellStyle style = wb.createCellStyle();
+			XSSFFont font = wb.createFont();
+			font.setBold(true);
+
+			style.setFont(font);
+			cell.setCellStyle(style);
+
+			cell.setCellValue(titles[i]);
+
+		}
+
+
+		return wb;
+
 	}
 
 }
