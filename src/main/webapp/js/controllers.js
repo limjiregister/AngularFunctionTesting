@@ -152,6 +152,12 @@ app.controller('poiCtrl',
 
 				}
 
+				console.log("goalArr:", goalArr);
+				/**   发送导出的请求，发送要导出的数据的id的集合  **/
+				baseMethod.exportDataRequst(angular.toJson(goalArr)).then(function (result) {
+
+				});
+
 			} else {
 				alert("请选择要导出的数据.....");
 			}
@@ -178,6 +184,7 @@ app.controller('poiCtrl',
 
 		/**   请求数据 table datas  **/
 		function getAllStudentsInfo(pageNo) {
+
 
 			baseMethod.toGetProfitDatas(pageNo).then(function (result) {
 
