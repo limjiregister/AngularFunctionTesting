@@ -14,4 +14,6 @@ public interface ProfitService {
 
 	public  void toSavePartData(List<Profit> data);
 
+	List<Profit> toGetExportDatas(List<Integer> list);
+
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.ProfitRepo;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/7/15.
  */
@@ -36,5 +38,10 @@ public class ProfitServiceImpl implements ProfitService {
 
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public List<Profit> toGetExportDatas(List<Integer> list) {
 
+		return profitRepo.toGetSelections(list);
+	}
 }

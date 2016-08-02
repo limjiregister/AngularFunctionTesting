@@ -1,5 +1,7 @@
 package controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import domain.Profit;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
@@ -228,6 +230,17 @@ public class ProfitCtrl {
 		return result;
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/toExportData.req", method = RequestMethod.POST)
+	public String exportRequest(@RequestParam("array") String arr) {
+
+		System.out.println("the export request data is:" + arr);
+
+		JSONArray array = JSON.parseArray(arr);
+
+
+		return "";
+	}
 
 }
 

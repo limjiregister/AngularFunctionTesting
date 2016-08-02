@@ -130,6 +130,28 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 				alert("数据库无返回数据.......错误代码：" + status);
 
 			});
+		},
+		exportDataRequst: function (array) {
+			/**   上传是52的方法  **/
+
+			var args = {"array": array};
+			var url = "toExportData.req";
+
+			return $http({
+				method: 'POST',
+				data: args,
+				url: url
+			}).success(function (response) {
+
+				console.log(response);
+				return response;
+
+			}).error(function (response, status) {
+
+				alert(status + response);
+
+			});
+
 		}
 
 	};
