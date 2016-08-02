@@ -90,7 +90,7 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
  * POI test controller
  */
 app.controller('poiCtrl',
-	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', function ($scope, $uibModal, $log, baseMethod, $rootScope) {
+	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope','$http', function ($scope, $uibModal, $log, baseMethod, $rootScope, $http) {
 
 		// alert(message);
 		/**
@@ -152,17 +152,20 @@ app.controller('poiCtrl',
 
 				}
 
-				console.log("goalArr:", goalArr);
 				/**   发送导出的请求，发送要导出的数据的id的集合  **/
-				baseMethod.exportDataRequst(angular.toJson(goalArr)).then(function (result) {
+				/**   angularjs的特殊处理，后端返回的文件流。否则，像正常那样处理result，只会得到乱码  **/
+				$http.post('toExportData.req', {"array": angular.toJson(goalArr)}, {responseType: "blob"}).success(
+					function (data) {
 
+						var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+						var fileName = "export.xlsx";
+						var a = document.createElement("a");
+						document.body.appendChild(a);
+						a.download = fileName;
+						a.href = URL.createObjectURL(blob);
+						a.click();
 
-
-
-
-
-
-				});
+					});
 
 			} else {
 				alert("请选择要导出的数据.....");

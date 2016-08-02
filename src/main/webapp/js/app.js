@@ -32,6 +32,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 	})
 });
 
+
 app.config(function ($httpProvider) {
 	$httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -130,29 +131,7 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 				alert("数据库无返回数据.......错误代码：" + status);
 
 			});
-		},
-		exportDataRequst: function (array) {
-			/**   上传的方法  **/
-
-			var args = {"array": array};
-			var url = "toExportData.req";
-
-			return $http({
-				method: 'POST',
-				data: args,
-				url: url
-			}).success(function (response) {
-
-				return response;
-
-			}).error(function (response, status) {
-
-				alert(status + response);
-
-			});
-
 		}
-
 	};
 
 }]);

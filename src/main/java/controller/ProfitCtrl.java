@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import service.ProfitService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -245,38 +247,25 @@ public class ProfitCtrl {
 			list.add((Integer) array.get(i));
 		}
 
-		ResponseEntity<byte[]> responseEntity = null;
+		byte[] bytes = null;
+		String filePath = "E:/export.xlsx";
+		File file = new File(filePath);
 
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		byte[] body = null;
-		InputStream is = null;
+		HttpHeaders headers = null;
 		try {
-			createExcelFile().write(os);
-//			body = os.toByteArray();
 
-			body = FileUtils.readFileToByteArray(new File("E:/export.xlsx"));
-
-			System.out.println("读取 输入流.....");
-			HttpHeaders headers = new HttpHeaders();
-			HttpStatus httpStatus = HttpStatus.OK;
-
-			System.out.println("设置headers。。。。");
-
+			bytes = FileUtils.readFileToByteArray(file);
+			headers = new HttpHeaders();
 			headers.add("Content-Disposition", "attachment;filename=export.xlsx");
 			headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
 
-			System.out.println("headers is: " + headers);
 
-			responseEntity = new ResponseEntity<byte[]>(body, headers, httpStatus);
-
-			System.out.println("responseEntity:" + responseEntity);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return responseEntity;
+		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+
 	}
 
 
