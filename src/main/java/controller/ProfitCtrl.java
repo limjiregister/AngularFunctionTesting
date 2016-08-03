@@ -3,7 +3,6 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import domain.Profit;
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import service.ProfitService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -234,9 +233,14 @@ public class ProfitCtrl {
 		return result;
 	}
 
+	/**
+	 * 请求导出的方法
+	 *
+	 * @param arr 前端传入的要导出的数组id
+	 * @return 返回一个下载的请求头
+	 */
 	@RequestMapping(value = "/toExportData.req", method = RequestMethod.POST)
 	public ResponseEntity<byte[]> exportRequest(@RequestParam("array") String arr) {
-
 
 		JSONArray array = JSON.parseArray(arr);
 
@@ -248,13 +252,14 @@ public class ProfitCtrl {
 		}
 
 		byte[] bytes = null;
-		String filePath = "E:/export.xlsx";
-		File file = new File(filePath);
-
+		ByteArrayOutputStream os = null;
 		HttpHeaders headers = null;
-		try {
 
-			bytes = FileUtils.readFileToByteArray(file);
+
+		try {
+			os = new ByteArrayOutputStream();
+			createExcelFile(list).write(os);
+			bytes = os.toByteArray();
 			headers = new HttpHeaders();
 			headers.add("Content-Disposition", "attachment;filename=export.xlsx");
 			headers.setContentType(MediaType.valueOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
@@ -268,16 +273,20 @@ public class ProfitCtrl {
 
 	}
 
+	/**
+	 * @param list 要从数据库读取的数据id的集合
+	 * @return 返回一个wrokbook，其他方法调用，转为输入流输出到前端
+	 */
+	public Workbook createExcelFile(List<Integer> list) {
 
-	public Workbook createExcelFile() {
-
-
+		/**   从数据库获取要导出的数据  **/
+		List<Profit> tempData = profitService.toGetExportDatas(list);
+		/**   创建一个excel本子  **/
 		XSSFWorkbook wb = new XSSFWorkbook();
-
+		/**   创建要给表  **/
 		XSSFSheet sheet = wb.createSheet("exportData");
-
+		/**   创建表头  **/
 		String[] titles = {"业务编号", "业务员", "销售价", "利润", "成本价", "托运方", "收货方", "客服", "实际完成时间", "实际装货时间", "实际送货时间", "实际业务时间", "录单人", "柜型", "柜量", "目的地", "费用类型", "付款方式", "业务类型", "业务部门"};
-
 		XSSFRow headerRow = sheet.createRow(0);
 
 		for (int i = 0; i < titles.length; i++) {
@@ -290,12 +299,39 @@ public class ProfitCtrl {
 			font.setBold(true);
 
 			style.setFont(font);
+			style.setAlignment(XSSFCellStyle.ALIGN_CENTER);
 			cell.setCellStyle(style);
 
 			cell.setCellValue(titles[i]);
 
 		}
 
+		/**   创建正文的内容，根据从数据库获取的数据，遍历创建表格内容  **/
+		for (int j = 0; j < tempData.size(); j++) {
+
+			XSSFRow tempRow = sheet.createRow(j + 1);
+
+			tempRow.createCell(0).setCellValue(tempData.get(j).getBusinessNo());
+			tempRow.createCell(1).setCellValue(tempData.get(j).getSalesman());
+			tempRow.createCell(2).setCellValue(tempData.get(j).getSalePrice());
+			tempRow.createCell(3).setCellValue(tempData.get(j).getProfits());
+			tempRow.createCell(4).setCellValue(tempData.get(j).getCostPrice());
+			tempRow.createCell(5).setCellValue(tempData.get(j).getShipper());
+			tempRow.createCell(6).setCellValue(tempData.get(j).getRecipient());
+			tempRow.createCell(7).setCellValue(tempData.get(j).getCuctomerService());
+			tempRow.createCell(8).setCellValue(tempData.get(j).getFinishTime());
+			tempRow.createCell(9).setCellValue(tempData.get(j).getShipmentTime());
+			tempRow.createCell(10).setCellValue(tempData.get(j).getDeliverTime());
+			tempRow.createCell(11).setCellValue(tempData.get(j).getBusinessTime());
+			tempRow.createCell(12).setCellValue(tempData.get(j).getRecordingPerson());
+			tempRow.createCell(13).setCellValue(tempData.get(j).getContType());
+			tempRow.createCell(14).setCellValue(tempData.get(j).getContNum());
+			tempRow.createCell(15).setCellValue(tempData.get(j).getDestination());
+			tempRow.createCell(16).setCellValue(tempData.get(j).getFeeType());
+			tempRow.createCell(17).setCellValue(tempData.get(j).getPayType());
+			tempRow.createCell(18).setCellValue(tempData.get(j).getBusinessType());
+			tempRow.createCell(19).setCellValue(tempData.get(j).getDepartment());
+		}
 
 		return wb;
 

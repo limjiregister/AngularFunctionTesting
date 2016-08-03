@@ -21,3 +21,18 @@ app.directive('imageloaded', [
 		}
 	}
 ]);
+
+app.directive('profitSearch', function () {
+
+	return {
+
+		restrict: 'AE',
+		templateUrl: "/templates/profitSearch.jsp",
+		controller: function () {
+
+		}
+
+
+	}
+
+});

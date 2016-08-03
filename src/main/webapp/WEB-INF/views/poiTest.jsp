@@ -45,6 +45,13 @@
 	</ul>
 </div>
 
+<!--  搜索条件的 -->
+<div uib-collapse="!checkModel.search">
+	
+	<profit-search></profit-search>
+	
+</div>
+
 <!--  table data -->
 <div style="min-height: 600px;overflow-y: auto;background: rgba(228, 228, 228, 0.15);border: solid 1px #9fa2a4;word-break: keep-all">
 	<table class="table table-hover table-bordered" si-table>
@@ -127,7 +134,7 @@
 	</div>
 	<div class="modal-body">
 
-		<input type="file" ngf-select ng-model="file"  ng-change="seefile(file)">
+		<input type="file" ngf-select ng-model="file" ng-change="seefile(file)">
 
 	</div>
 	<div class="modal-footer">

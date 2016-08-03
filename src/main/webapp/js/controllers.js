@@ -158,7 +158,11 @@ app.controller('poiCtrl',
 					function (data) {
 
 						var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-						var fileName = "export.xlsx";
+
+						/**   用时间戳作为文件名  **/
+						var time = Date.now();
+						var fileName = time + ".xlsx";
+
 						var a = document.createElement("a");
 						document.body.appendChild(a);
 						a.download = fileName;
