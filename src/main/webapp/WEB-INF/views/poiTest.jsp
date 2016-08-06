@@ -21,7 +21,7 @@
 
 <div class="btn-group btn-group-sm">
 	<label class="btn btn-lg btn-info" ng-model="checkModel.left"
-		   ng-click="tableParams.reload()"><i class=" glyphicon glyphicon-refresh"></i> 刷新
+		   ng-click="refreshData()"><i class=" glyphicon glyphicon-refresh"></i> 刷新
 	</label> <label class="btn btn-info btn-lg" ng-model="checkModel.search"
 					uib-btn-checkbox> <i class=" glyphicon glyphicon-search"></i> 搜索 <i
 		class="glyphicon"

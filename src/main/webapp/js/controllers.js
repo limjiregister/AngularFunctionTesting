@@ -90,7 +90,7 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
  * POI test controller
  */
 app.controller('poiCtrl',
-	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope','$http', function ($scope, $uibModal, $log, baseMethod, $rootScope, $http) {
+	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', '$http',function ($scope, $uibModal, $log, baseMethod, $rootScope, $http) {
 
 		// alert(message);
 		/**
@@ -219,6 +219,14 @@ app.controller('poiCtrl',
 
 		getAllStudentsInfo(1);
 
+		/**   刷新当前页  **/
+		$scope.refreshData = function () {
+
+			getAllStudentsInfo($scope.currentPage);
+
+		};
+
+
 		$scope.onPageChange = function () {
 
 			/**   把勾选的去掉  **/
@@ -227,7 +235,42 @@ app.controller('poiCtrl',
 
 		};
 
+		/**   时间选择器  **/
 
+		$scope.popup = {
+			opened1: false,
+			opened2: false,
+			opened3: false
+		};
+
+		$scope.open1= function () {
+			$scope.popup.opened1 = !$scope.popup.opened1;
+		};
+		$scope.open2= function () {
+			$scope.popup.opened2= !$scope.popup.opened2;
+		};
+		$scope.open3= function () {
+			$scope.popup.opened3 = !$scope.popup.opened3;
+		};
+
+
+		$scope.format = "yyyy-MM-dd";
+
+
+		/**   限制时间选择的范围  **/
+		// $scope.dateOptions = {
+		// 	dateDisabled: disabled,
+		// 	formatYear: 'yy',
+		// 	maxDate: new Date(2020, 5, 22),
+		// 	minDate: new Date(),
+		// 	startingDay: 1
+		// };
+		// Disable weekend selection
+		// function disabled(data) {
+		// 	var date = data.date,
+		// 		mode = data.mode;
+		// 	return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+		// }
 	}]);
 
 app.controller('ModalInstanceCtrl',
