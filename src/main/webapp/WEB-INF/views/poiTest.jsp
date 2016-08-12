@@ -75,8 +75,8 @@
 			<th ng-click="predicate='contNum'; reverse=!reverse">柜量</th>
 			<th ng-click="predicate='destination'; reverse=!reverse">目的地</th>
 			<th ng-click="predicate='feeType'; reverse=!reverse">费用类型</th>
-			<th ng-click="predicate='payType'; reverse=!reverse">付款方式</th>
-			<th ng-click="predicate='businessType'; reverse=!reverse">业务类型</th>
+			<th ng-click="predicate='payType'; reverse=!reverse">业务类型</th>
+			<th ng-click="predicate='businessType'; reverse=!reverse">付款方式</th>
 			<th ng-click="predicate='department'; reverse=!reverse">业务部门</th>
 		</tr>
 		</thead>

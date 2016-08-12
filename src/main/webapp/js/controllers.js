@@ -412,7 +412,8 @@ app.controller('ModalInstanceCtrl',
 			var begin = fileName.lastIndexOf(".");
 			var end = fileName.length;
 			var getName = fileName.substring(begin, end);
-			if (getName == "xlxs") {
+			console.log("getName:"+getName);
+			if (getName == ".xlsx") {
 
 				$scope.isOkFile = true;
 
@@ -459,7 +460,7 @@ app.controller('ModalInstanceCtrl',
 
 			} else {
 
-				alert("请重新选择后缀名为xlxs的excel文件.....");
+				alert("请重新选择后缀名为xlsx的excel文件.....");
 
 			}
 
