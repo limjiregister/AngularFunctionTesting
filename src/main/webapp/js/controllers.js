@@ -197,21 +197,15 @@ app.controller('poiCtrl',
 
 			baseMethod.toGetProfitDatas(searchObject).then(function (result) {
 
-				console.log("result:", result);
+				//删除$scope.searchObject这两个对象，以便判断搜索参数是否为空，最终处理 搜索状态 的设置
+				delete $scope.searchObject.pageNo;
+				delete $scope.searchObject.pageCount;
 
 				if (result.data != "") {
 
-					if (result.data.content.length != 0) {
-
-						$scope.datas = result.data.content;
-						$scope.totalItems = result.data.totalElements;
-						$scope.pageCount = result.data.totalPages;
-
-					} else {
-
-						alert("数据库返回数据中内容content为空！！");
-
-					}
+					$scope.datas = result.data.content;
+					$scope.totalItems = result.data.totalElements;
+					$scope.pageCount = result.data.totalPages;
 
 				} else {
 
@@ -222,43 +216,86 @@ app.controller('poiCtrl',
 			});
 		}
 
+		//初始化 首页请求参数
 		$scope.searchObject = {};
 		$scope.searchStatus = false;
 		var initParam = {"pageNo": 1, "pageCount": 20};
 		toLoadProfitData(initParam);
-		console.log($scope.searchObject == undefined);
 
 		/**   刷新当前页  **/
 		$scope.refreshData = function () {
 
-			toLoadProfitData($scope.currentPage);
+			//去掉勾选的
+			$scope.selectAll = false;
+
+			//如果是搜索状态的话，用搜索的参数
+			if ($scope.searchStatus) {
+
+				//为searchObject添加页码，条数的参数，因为在获取后端返回数据的时候就删除了
+				$scope.searchObject.pageNo = $scope.currentPage;
+				$scope.searchObject.pageCount = 20;
+				toLoadProfitData($scope.searchObject);
+
+			} else {
+
+				//不是搜索状态下的刷新
+				toLoadProfitData({"pageNo": $scope.currentPage, "pageCount": 20});
+
+			}
+
 
 		};
 
 		$scope.onPageChange = function () {
+
+			console.log("onPageChange:::$scope.searchStatus", $scope.searchStatus);
 
 			/**   把勾选的去掉  **/
 			$scope.selectAll = false;
 			$scope.searchObject.pageNo = $scope.currentPage;
 			$scope.searchObject.pageCount = 20;
 			toLoadProfitData($scope.searchObject);
-
 		};
 
-		//以下为搜索功能代码
+		/**
+		 * 判断对象是否为空
+		 * @param obj：传入的要判断的对象
+		 * @returns {boolean}
+		 */
+		function isEmptyObject(obj) {
+			for (var name in obj) {
+
+				if (obj[name] != "") {
+
+					return false;
+
+				}
+				console.log("name:::::::::" + name);
+			}
+			return true;
+		};
+
+		/**
+		 * 搜索方法
+		 */
 		$scope.doSearch = function () {
 
+			//如果 搜索状态为fasle，则在此改为true
 			if (!$scope.searchStatus) {
+
 				$scope.searchStatus = true;
+
 			}
 
-			console.log($scope.searchObject == undefined);
-
-			if ($scope.searchObject == undefined) {
+			//如果 $scope.searchObject 是一个空对象，意味着没有搜索参数，就不搜索，搜索状态为false
+			if (isEmptyObject($scope.searchObject)) {
 
 				$scope.searchStatus = false;
 
 			}
+			console.log("search:::$scope.searchStatus", $scope.searchStatus);
+			console.log("search:::$scope.searchObject", $scope.searchObject);
+			console.log("boolean:::$scope.searchObject", isEmptyObject($scope.searchObject));
 			$scope.searchObject.pageNo = 1;
 			$scope.searchObject.pageCount = 20;
 
@@ -284,9 +321,9 @@ app.controller('poiCtrl',
 
 			$scope.searchObject = {};
 			$scope.searchStatus = false;
-			$scope.makeTime = new Date();
-			$scope.finishTime = new Date();
-			$scope.sendTime = new Date();
+			$scope.makeTime = null;
+			$scope.finishTime = null;
+			$scope.sendTime = null;
 
 		};
 

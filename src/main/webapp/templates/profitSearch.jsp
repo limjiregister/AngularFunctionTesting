@@ -60,7 +60,7 @@
 		<div class="input-group" style="width: 30% !important;float: left;margin-left: 15px;">
 
 			<span class="input-group-addon">实际送货时间</span>
-			<input type="text" class="form-control" uib-datepicker-popup="{{format}}"
+			<input type="datetime" class="form-control" uib-datepicker-popup="{{format}}"
 				   is-open="popup.opened3" datepicker-options="dateOptions" ng-required="true"
 				   close-text="Close" alt-input-formats="altInputFormats" ng-click="open3()" placeholder="实际送货时间"
 				   ng-model="sendTime"/>
