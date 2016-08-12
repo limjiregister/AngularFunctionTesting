@@ -3,6 +3,7 @@ package controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import domain.Profit;
+import domain.ProfitSearch;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.WebUtils;
 import service.ProfitService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ProfitCtrl {
@@ -279,11 +282,11 @@ public class ProfitCtrl {
 	 */
 	public Workbook createExcelFile(List<Integer> list) {
 
-		/**   从数据库获取要导出的数据  **/
+		//从数据库获取要导出的数据
 		List<Profit> tempData = profitService.toGetExportDatas(list);
-		/**   创建一个excel本子  **/
+		//创建一个excel本子
 		XSSFWorkbook wb = new XSSFWorkbook();
-		/**   创建要给表  **/
+		//创建要给表
 		XSSFSheet sheet = wb.createSheet("exportData");
 		/**   创建表头  **/
 		String[] titles = {"业务编号", "业务员", "销售价", "利润", "成本价", "托运方", "收货方", "客服", "实际完成时间", "实际装货时间", "实际送货时间", "实际业务时间", "录单人", "柜型", "柜量", "目的地", "费用类型", "付款方式", "业务类型", "业务部门"};
@@ -306,7 +309,7 @@ public class ProfitCtrl {
 
 		}
 
-		/**   创建正文的内容，根据从数据库获取的数据，遍历创建表格内容  **/
+		//创建正文的内容，根据从数据库获取的数据，遍历创建表格内容
 		for (int j = 0; j < tempData.size(); j++) {
 
 			XSSFRow tempRow = sheet.createRow(j + 1);
@@ -335,6 +338,31 @@ public class ProfitCtrl {
 
 		return wb;
 
+	}
+
+	/**
+	 * 搜索函数
+	 *
+	 * @return 返回一个Page的Json数据
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/doSearchAndLoadData.req", method = RequestMethod.POST)
+	public Page<Profit> doSearch() {
+
+		//从请求域获取参数
+		Map<String, Object> params = WebUtils.getParametersStartingWith(request, "");
+
+		System.out.println("前台发送过来的数据："+params);
+
+
+		//把参数转换为实体对象
+		ProfitSearch searchDomain = JSON.parseObject(JSON.toJSONString(params), ProfitSearch.class);
+
+		System.out.println("处理的结果：" + searchDomain);
+
+		System.out.println("result is:"+ profitService.toDoSearch(searchDomain));
+
+		return profitService.toDoSearch(searchDomain);
 	}
 
 }

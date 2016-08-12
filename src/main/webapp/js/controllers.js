@@ -17,7 +17,6 @@ app.controller("mainCtrl", ["$scope", function ($scope) {
 
 app.controller("StudentsCtl", ["$scope", "baseMethod", function ($scope, baseMethod) {
 
-
 	function getAllStudentsInfo(pageNo) {
 
 		baseMethod.toGetStudentList(pageNo).then(function (result) {
@@ -28,7 +27,6 @@ app.controller("StudentsCtl", ["$scope", "baseMethod", function ($scope, baseMet
 
 		});
 	}
-
 
 	getAllStudentsInfo(1);
 
@@ -90,7 +88,7 @@ app.controller('twoCtrl', ['$scope', function ($scope) {
  * POI test controller
  */
 app.controller('poiCtrl',
-	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', '$http',function ($scope, $uibModal, $log, baseMethod, $rootScope, $http) {
+	["$scope", "$uibModal", "$log", "baseMethod", '$rootScope', '$http', function ($scope, $uibModal, $log, baseMethod, $rootScope, $http) {
 
 		// alert(message);
 		/**
@@ -159,7 +157,7 @@ app.controller('poiCtrl',
 
 						var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
 
-						/**   用时间戳作为文件名  **/
+						//用时间戳作为文件名
 						var time = Date.now();
 						var fileName = time + ".xlsx";
 
@@ -177,8 +175,7 @@ app.controller('poiCtrl',
 
 		};
 
-		/**   监听全选 按钮  **/
-
+		//监听全选 按钮
 		$scope.selAllOrNot = function () {
 
 			if ($scope.selectAll) {
@@ -196,44 +193,103 @@ app.controller('poiCtrl',
 
 
 		/**   请求数据 table datas  **/
-		function getAllStudentsInfo(pageNo) {
+		function toLoadProfitData(searchObject) {
 
+			baseMethod.toGetProfitDatas(searchObject).then(function (result) {
 
-			baseMethod.toGetProfitDatas(pageNo).then(function (result) {
+				console.log("result:", result);
 
-				if (result.data.content.length != 0) {
+				if (result.data != "") {
 
-					$scope.datas = result.data.content;
-					$scope.totalItems = result.data.totalElements;
-					$scope.pageCount = result.data.totalPages;
+					if (result.data.content.length != 0) {
+
+						$scope.datas = result.data.content;
+						$scope.totalItems = result.data.totalElements;
+						$scope.pageCount = result.data.totalPages;
+
+					} else {
+
+						alert("数据库返回数据中内容content为空！！");
+
+					}
 
 				} else {
 
-					alert("数据库返回的数据为空.......");
+					alert("后台无可用数据data返回！！");
 
 				}
 
 			});
 		}
 
-
-		getAllStudentsInfo(1);
+		$scope.searchObject = {};
+		$scope.searchStatus = false;
+		var initParam = {"pageNo": 1, "pageCount": 20};
+		toLoadProfitData(initParam);
+		console.log($scope.searchObject == undefined);
 
 		/**   刷新当前页  **/
 		$scope.refreshData = function () {
 
-			getAllStudentsInfo($scope.currentPage);
+			toLoadProfitData($scope.currentPage);
 
 		};
-
 
 		$scope.onPageChange = function () {
 
 			/**   把勾选的去掉  **/
 			$scope.selectAll = false;
-			getAllStudentsInfo($scope.currentPage);
+			$scope.searchObject.pageNo = $scope.currentPage;
+			$scope.searchObject.pageCount = 20;
+			toLoadProfitData($scope.searchObject);
 
 		};
+
+		//以下为搜索功能代码
+		$scope.doSearch = function () {
+
+			if (!$scope.searchStatus) {
+				$scope.searchStatus = true;
+			}
+
+			console.log($scope.searchObject == undefined);
+
+			if ($scope.searchObject == undefined) {
+
+				$scope.searchStatus = false;
+
+			}
+			$scope.searchObject.pageNo = 1;
+			$scope.searchObject.pageCount = 20;
+
+			console.log("searchDatas处理数据前:", $scope.searchObject);
+
+			if ($scope.sendTime != null) {
+				$scope.searchObject.sendTime = gmtToString($scope.sendTime);
+			}
+
+			if ($scope.makeTime != null) {
+				$scope.searchObject.makeTime = gmtToString($scope.makeTime);
+			}
+
+			if ($scope.finishTime != null) {
+				$scope.searchObject.finishTime = gmtToString($scope.finishTime);
+			}
+
+			toLoadProfitData($scope.searchObject);
+		};
+
+		/**   重置  **/
+		$scope.doReset = function () {
+
+			$scope.searchObject = {};
+			$scope.searchStatus = false;
+			$scope.makeTime = new Date();
+			$scope.finishTime = new Date();
+			$scope.sendTime = new Date();
+
+		};
+
 
 		/**   时间选择器  **/
 
@@ -243,18 +299,41 @@ app.controller('poiCtrl',
 			opened3: false
 		};
 
-		$scope.open1= function () {
+		$scope.open1 = function () {
 			$scope.popup.opened1 = !$scope.popup.opened1;
 		};
-		$scope.open2= function () {
-			$scope.popup.opened2= !$scope.popup.opened2;
+		$scope.open2 = function () {
+			$scope.popup.opened2 = !$scope.popup.opened2;
 		};
-		$scope.open3= function () {
+		$scope.open3 = function () {
 			$scope.popup.opened3 = !$scope.popup.opened3;
 		};
 
-
 		$scope.format = "yyyy-MM-dd";
+
+		/**
+		 * 转为为 时间格式
+		 * @param datetime
+		 * @returns {string}
+		 */
+		function gmtToString(datetime) {
+			var year = datetime.getFullYear();
+			var month = datetime.getMonth() + 1;//js从0开始取
+			var day = datetime.getDate();
+
+			if (month < 10) {
+				month = "0" + month;
+			}
+			if (day < 10) {
+				day = "0" + day;
+			}
+
+			year = year.toString();
+			var result = year + "-" + month + "-" + day;
+
+
+			return result;
+		}
 
 
 		/**   限制时间选择的范围  **/

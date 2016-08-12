@@ -92,6 +92,7 @@
     <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.poi:poi-scratchpad:3.9" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: io.springside:springside-core:4.3.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: io.springside:springside-utils:4.3.0-SNAPSHOT" level="project" />
   </component>
 </module>

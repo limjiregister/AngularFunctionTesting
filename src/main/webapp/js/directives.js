@@ -28,11 +28,12 @@ app.directive('profitSearch', function () {
 
 		restrict: 'AE',
 		templateUrl: "/templates/profitSearch.jsp",
-		controller: function () {
+		controller: function ($scope, $http) {
+
 
 		}
 
+	};
 
-	}
 
 });

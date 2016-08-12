@@ -111,19 +111,18 @@ app.factory("baseMethod", ["$http", 'cfpLoadingBar', function ($http, cfpLoading
 			});
 
 		},
-		toGetProfitDatas: function (pageNo) {
+		toGetProfitDatas: function (searchObject) {
 			//启动loading
 			cfpLoadingBar.start();
 
-			var args = {"pageNO": pageNo};
-			var url = "profitDatas.req";
+			var url = "doSearchAndLoadData.req";
 
 			return $http({
 				method: 'POST',
-				data: args,
+				data: searchObject,
 				url: url
 			}).success(function (response) {
-
+				console.log("originral:" , response);
 				return response;
 
 			}).error(function (response, status) {

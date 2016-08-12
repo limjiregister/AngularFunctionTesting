@@ -1,6 +1,7 @@
 package service;
 
 import domain.Profit;
+import domain.ProfitSearch;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface ProfitService {
 	public  void toSavePartData(List<Profit> data);
 
 	List<Profit> toGetExportDatas(List<Integer> list);
+
+	Page<Profit> toDoSearch(ProfitSearch profitSearch);
 
 }
